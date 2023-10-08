@@ -2,7 +2,7 @@
 
 #include "runtime/runtime.h"
 
-TEST(MIPTVM, ExecutionFlowTest)
+TEST(MIPT_VM, ExecutionFlowTest)
 {
     ASSERT_EQ(mipt_vm::Runtime::GetInstance(), nullptr);
     mipt_vm::Runtime::Create();

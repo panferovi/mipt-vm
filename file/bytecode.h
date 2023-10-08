@@ -5,15 +5,14 @@
 
 namespace mipt_vm {
 
-class Instruction {
-
-};
+class Instruction {};
 
 class Bytecode {
 public:
     using Instructions = std::vector<Instruction>;
 
-    Instructions &GetInstructions() {
+    Instructions &GetInstructions()
+    {
         return instructions_;
     }
 
