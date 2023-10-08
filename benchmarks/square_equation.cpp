@@ -2,12 +2,12 @@
 
 class SquareEquation {
 public:
-    static mipt_vm::Bytecode GenerateBytecode() {
+    static mipt_vm::Bytecode GenerateBytecode()
+    {
         mipt_vm::Bytecode bc;
         return bc;
     }
 };
-
 
 int main()
 {
@@ -15,7 +15,6 @@ int main()
 
     auto *runtime = mipt_vm::Runtime::GetInstance();
     auto bytecode = SquareEquation::GenerateBytecode();
- 
     runtime->GetVM()->GetInterpreter().Interpret(bytecode);
 
     mipt_vm::Runtime::Destroy();

@@ -6,7 +6,7 @@
 
 namespace mipt_vm {
 
-[[noreturn]] void AssertionFail(const char* expr, const char* file, unsigned line, const char* function)
+[[noreturn]] void AssertionFail(const char *expr, const char *file, unsigned line, const char *function)
 {
     int errnum = errno;
     std::cerr << "ASSERTION FAILED: " << expr << std::endl;

@@ -1,0 +1,51 @@
+.function i32 main() {
+    lda.str "Input coeffs: a, b, c\n"    
+    sta.obj v0
+    call IO.printString, v0
+
+    call IO.input
+    sta v0
+    call IO.input
+    sta v1
+    call IO.input
+    sta v2
+
+    lda v0
+    mul v2
+    muli 4
+    sta v3              # v3: 4 * a * c
+
+    lda v1
+    mul v1
+    sub v3
+    sta v3
+    call Math.sqrt v3   # v3: sqrt(D)
+
+    ldai 0
+    sub v1
+    sta v4              # v4: -b
+
+    lda v0
+    muli 2
+    stai v5             # v5: 2 * a
+
+    lda v4
+    add v3
+    div v5
+    stai v6             # v6: root1
+
+    lda v4
+    sub v3
+    div v5
+    stai v7             # v7: root2
+
+    lda.str "Roots of the equation:\n"    
+    sta.obj v3
+
+    call IO.printString, v3
+    call IO.printI64, v6
+    call IO.printI64, v7
+
+    ldai 0
+    return
+}
