@@ -20,3 +20,27 @@ target_include_directories(mipt_vm
 
 add_subdirectory(benchmarks)
 add_subdirectory(tests)
+
+function (filter_items aItems aRegEx)
+    # For each item in our list
+    foreach (item ${${aItems}})
+        # Check if our items matches our regular expression
+        if ("${item}" MATCHES ${aRegEx})
+            # Remove current item from our list
+            list (REMOVE_ITEM ${aItems} ${item})
+        endif ("${item}" MATCHES ${aRegEx})
+    endforeach(item)
+    # Provide output parameter
+    set(${aItems} ${${aItems}} PARENT_SCOPE)
+endfunction (filter_items)
+file(GLOB_RECURSE EMULATOR_FILES *cpp *.h)
+filter_items(EMULATOR_FILES "CMakeFiles/*")
+
+find_program(CLANG_FORMAT "clang-format-14" REQUIRED)
+
+add_custom_target(format
+    COMMAND clang-format-14
+    -i
+    -style=file
+    ${EMULATOR_FILES}
+)

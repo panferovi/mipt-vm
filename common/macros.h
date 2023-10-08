@@ -5,6 +5,7 @@
 
 #include "debug.h"
 
+// clang-format off
 #define NO_COPY_CTOR(TypeName) TypeName(const TypeName&) = delete;
 
 #define NO_COPY_OPERATOR(TypeName) void operator=(const TypeName&) = delete
@@ -67,5 +68,6 @@
 #define ASSERT_PRINT(cond, message) static_cast<void>(0)
 #define UNREACHABLE __builtin_unreachable
 #endif  // !NDEBUG
+// clang-format on
 
 #endif  // INCLUDE_MACROS_H_
