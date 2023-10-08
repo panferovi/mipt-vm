@@ -5,7 +5,27 @@
 
 namespace mipt_vm {
 
-class Instruction {};
+class Instruction {
+public:
+    enum Type : uint8_t {
+        LDA,
+        LDA_I,
+        LDA_STR,
+        STA,
+        STA_OBJ,
+        ADD,
+        SUB,
+        MUL,
+        MULI,
+        DIV,
+        CALL,
+        RETURN
+    };
+
+    Type type;
+    uint8_t src_1;
+    uint8_t src_2;
+};
 
 class Bytecode {
 public:

@@ -1,10 +1,17 @@
 #include "runtime/runtime.h"
+#include "runtime/vm.h"
+#include "file/bytecode.h"
 
 class SquareEquation {
 public:
     static mipt_vm::Bytecode GenerateBytecode()
     {
-        mipt_vm::Bytecode bc;
+        using namespace mipt_vm;
+
+        Bytecode bc;
+        auto &insts = bc.GetInstructions();
+        insts.push_back(Instruction{});
+
         return bc;
     }
 };

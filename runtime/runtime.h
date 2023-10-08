@@ -2,9 +2,10 @@
 #define RUNTIME_RUNTIME_H_
 
 #include "common/macros.h"
-#include "runtime/vm.h"
 
 namespace mipt_vm {
+
+class VM;
 
 class Runtime {
 public:
