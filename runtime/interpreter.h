@@ -2,9 +2,11 @@
 #define RUNTIME_INTERPRETER_H_
 
 #include "common/macros.h"
-#include "file/bytecode.h"
+#include "runtime/register_manager.h"
 
 namespace mipt_vm {
+
+class Bytecode;
 
 class Interpreter {
 public:
@@ -13,6 +15,9 @@ public:
     NO_MOVE_SEMANTIC(Interpreter);
 
     void Interpret(Bytecode &bytecode);
+
+private:
+    RegisterManager reg_manager_;
 };
 
 }  // namespace mipt_vm

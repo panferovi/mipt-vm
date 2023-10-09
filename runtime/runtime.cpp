@@ -1,4 +1,5 @@
 #include "runtime/runtime.h"
+#include "runtime/vm.h"
 
 namespace mipt_vm {
 

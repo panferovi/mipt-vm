@@ -1,7 +1,7 @@
 .function i32 main() {
-    lda.str "Input coeffs: a, b, c\n"    
+    lda.str "Input coeffs: a, b, c"
     sta.obj v0
-    call IO.printString, v0
+    call IO.printlnString, v0
 
     call IO.input
     sta v0
@@ -39,12 +39,12 @@
     div v5
     stai v7             # v7: root2
 
-    lda.str "Roots of the equation:\n"    
+    lda.str "Roots of the equation:"
     sta.obj v3
 
-    call IO.printString, v3
-    call IO.printI64, v6
-    call IO.printI64, v7
+    call IO.printlnString, v3
+    call IO.printlnI64, v6
+    call IO.printlnI64, v7
 
     ldai 0
     return

@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 
 #include "runtime/runtime.h"
+#include "runtime/vm.h"
+#include "file/bytecode.h"
 
 TEST(MIPT_VM, ExecutionFlowTest)
 {
