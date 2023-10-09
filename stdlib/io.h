@@ -9,7 +9,11 @@ class IO {
 public:
     static void printString(const char *str);
 
+    static void printlnString(const char *str);
+
     static void printI64(int64_t val);
+
+    static void printlnI64(int64_t val);
 };
 
 }  // namespace mipt_vm::stdlib

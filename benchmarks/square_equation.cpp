@@ -10,7 +10,7 @@ public:
 
         Bytecode bc;
         auto &insts = bc.GetInstructions();
-        insts.push_back(Instruction{});
+        insts.push_back(Instruction {});
 
         return bc;
     }

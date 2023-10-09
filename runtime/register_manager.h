@@ -9,7 +9,12 @@ namespace mipt_vm {
 
 class Register {
 public:
-    using ValueType = int64_t;
+    union ValueType {
+        int64_t as_int {0};
+        uint64_t as_uint;
+        double as_double;
+    };
+
     ValueType value;
 };
 
@@ -22,8 +27,8 @@ public:
     static constexpr uint16_t RegisterCount = UINT16_MAX;
 
 private:
-    uint64_t pc_ = 0;
-    uint64_t accumulator_ = 0;
+    uint64_t pc_ {0};
+    Register accumulator_;
     std::array<Register, RegisterCount> registers_;
 };
 

@@ -30,7 +30,7 @@ void Interpreter::Interpret([[maybe_unused]] Bytecode &bytecode)
   RegisterManager &reg_manager = GetRegManager();
   uint64_t &pc = reg_manager.GetPc();
   uint64_t &ac = reg_manager.GetAccumulator();
-  std::array<Register, RegisterCount> = ...
+  std::array<Register, RegisterCount> = ... 
 
   #define NEXT()                     \
     pc++;                            \

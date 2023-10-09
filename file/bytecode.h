@@ -3,6 +3,8 @@
 
 #include <vector>
 
+#include "file/proto.h"
+
 namespace mipt_vm {
 
 class Instruction {
