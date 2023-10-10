@@ -16,9 +16,24 @@ public:
         HANDLE_COMPLEX
     };
 
+    void *GetHandler()
+    {
+        return handler_;
+    }
+
+    uint8_t GetArg()
+    {
+        return arg_;
+    }
+
+    Type GetType()
+    {
+        return type_;
+    }
+
 private:
     Type type_;
-    uint8_t arg_name_ {0};
+    uint8_t arg_ {0};
     void *handler_ {nullptr};
 };
 

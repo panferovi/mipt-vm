@@ -36,10 +36,10 @@ endfunction (filter_items)
 file(GLOB_RECURSE EMULATOR_FILES *cpp *.h)
 filter_items(EMULATOR_FILES "CMakeFiles/*")
 
-find_program(CLANG_FORMAT "clang-format-14" REQUIRED)
+find_program(CLANG_FORMAT "clang-format" REQUIRED)
 
 add_custom_target(format
-    COMMAND clang-format-14
+    COMMAND clang-format
     -i
     -style=file
     ${EMULATOR_FILES}
