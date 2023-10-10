@@ -8,6 +8,7 @@ namespace mipt_vm {
 class Proto {
 public:
     enum Type : uint8_t {
+        UNDEFINED,
         HANDLE_VOID_VOID,
         HANDLE_VOID_I64,
         HANDLE_VOID_F64,
@@ -38,6 +39,21 @@ public:
     Proto(Type type, void *handler, uint8_t reg) : type_(type), handler_(handler), reg_(reg) {}
 
     Proto(Type type, void *handler) : type_(type), handler_(handler) {}
+
+    void *GetHandler()
+    {
+        return handler_;
+    }
+
+    uint8_t GetReg()
+    {
+        return reg_;
+    }
+
+    Type GetType()
+    {
+        return type_;
+    }
 
 private:
     const Type type_;

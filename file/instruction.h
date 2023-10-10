@@ -14,24 +14,30 @@ public:
     enum Type : uint8_t {
         LDA,
         LDAI,
-        FLDAI,
         FLDA,
+        FLDAI,
         LDASTR,
         STA,
         FSTA,
         STAOBJ,
         ADD,
+        ADDI,
         FADD,
+        FADDI,
         SUB,
+        SUBI,
         FSUB,
+        FSUBI,
         MUL,
+        MULI,
         FMUL,
         FMULI,
-        MULI,
         DIV,
+        DIVI,
         FDIV,
+        FDIVI,
         CALL,
-        RETURN
+        EXIT
     };
     // clang-format on
 
@@ -59,7 +65,6 @@ public:
 
     Instruction(Proto *proto) : type(Type::CALL)
     {
-        std::cout << "proto" << std::endl;
         src_2.proto = proto;
     }
 
@@ -73,14 +78,14 @@ public:
         src_2.reg = reg_src_2;
     }
 
-    Instruction(Instruction &&inst)
-        : type(inst.type), src_reg_1(inst.src_reg_1), src_2(inst.src_2)
+    Instruction(Instruction &&inst) : type(inst.type), src_reg_1(inst.src_reg_1), src_2(inst.src_2)
     {
         if (type == Type::CALL) {
             src_2.proto = nullptr;
         }
     }
-    Instruction &operator=(Instruction &&inst) {
+    Instruction &operator=(Instruction &&inst)
+    {
         if (this != &inst) {
             type = inst.type;
             src_reg_1 = inst.src_reg_1;
@@ -94,7 +99,8 @@ public:
 
     NO_COPY_SEMANTIC(Instruction);
 
-    ~Instruction() {
+    ~Instruction()
+    {
         if (type == Type::CALL) {
             Proto::Destroy(src_2.proto);
         }
@@ -105,6 +111,6 @@ public:
     OperandType src_2;
 };
 
-}  // mipt_vm
+}  // namespace mipt_vm
 
 #endif  // FILE_INSTRUCTION_H_
