@@ -16,6 +16,10 @@ void Interpreter::Interpret([[maybe_unused]] Bytecode &bytecode)
     auto &ac = reg_manager_.GetAccumulator();
     auto &registers = reg_manager_.GetRegisters();
 
+    Proto::Type proto_type = Proto::Type::HANDLE_F64_F64;
+    void *handler = nullptr;
+    uint8_t reg = 0;
+
 #define DISPATCH() \
     pc++;          \
     goto *dispatch_table[insns[pc].type]
@@ -119,24 +123,24 @@ staobj:
     registers[insns[pc].src_2.reg] = ac;
     DISPATCH();
 call:
-    auto proto_type = insns[pc].src_2.proto->GetType();
-    auto handler = insns[pc].src_2.proto->GetHandler();
-    auto arg = insns[pc].src_2.proto->GetArg();
+    proto_type = insns[pc].src_2.proto->GetType();
+    handler = insns[pc].src_2.proto->GetHandler();
+    reg = insns[pc].src_2.proto->GetReg();
 
     switch (proto_type) {
         case Proto::Type::HANDLE_VOID_F64:
-            reinterpret_cast<void (*)(double)>(handler)(registers[arg].value.as_double);
+            reinterpret_cast<void (*)(double)>(handler)(registers[reg].value.as_double);
             break;
         case Proto::Type::HANDLE_VOID_OBJ:
             printf("Im HANDLE_VOID_OBJ\n");
-            reinterpret_cast<void (*)(uint64_t)>(handler)(registers[arg].value.as_uint);
+            reinterpret_cast<void (*)(uint64_t)>(handler)(registers[reg].value.as_uint);
             break;
         case Proto::Type::HANDLE_F64_VOID:
             ac.value.as_double = reinterpret_cast<double (*)()>(handler)();
             printf("Im HANDLE_F64_VOID %lg\n", ac.value.as_double);
             break;
         case Proto::Type::HANDLE_F64_F64:
-            ac.value.as_double = reinterpret_cast<double (*)(double)>(handler)(registers[arg].value.as_double);
+            ac.value.as_double = reinterpret_cast<double (*)(double)>(handler)(registers[reg].value.as_double);
             break;
         default:
             UNREACHABLE();

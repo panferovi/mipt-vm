@@ -38,8 +38,12 @@ public:
             insts.emplace_back(Instruction::Type::FMUL, 2);
             insts.emplace_back(Instruction::Type::FMULI, Instruction::Immediate {.as_double = 4});
             insts.emplace_back(Instruction::Type::FSTA, 3);
+            insts.emplace_back(Instruction::Type::FLDA, 1);
+            insts.emplace_back(Instruction::Type::FMUL, 1);
+            insts.emplace_back(Instruction::Type::FSUB, 3);
+            insts.emplace_back(Instruction::Type::FSTA, 3);
             insts.emplace_back(
-                Proto::Create(Proto::Type::HANDLE_F64_F64, reinterpret_cast<void *>(stdlib::Math::sqrt)));
+                Proto::Create(Proto::Type::HANDLE_F64_F64, reinterpret_cast<void *>(stdlib::Math::sqrt), 3));
             insts.emplace_back(Instruction::Type::FSTA, 3);
         }
         {

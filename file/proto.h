@@ -44,9 +44,9 @@ public:
         return handler_;
     }
 
-    uint8_t GetArg()
+    uint8_t GetReg()
     {
-        return arg_;
+        return reg_;
     }
 
     Type GetType()
@@ -56,7 +56,6 @@ public:
 
 private:
     const Type type_;
-    uint8_t arg_ {0};
     void *handler_ {nullptr};
     uint8_t reg_ {0};
 };
