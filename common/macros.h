@@ -63,7 +63,11 @@
     ASSERT_PRINT(false, "This line should be unreachable"); \
     __builtin_unreachable();                                \
   } while (0)
+
+#define LOG(message)                 \
+  std::cout << message << std::endl;
 #else  // NDEBUG
+#define LOG(message)
 #define ASSERT(cond) static_cast<void>(0)
 #define ASSERT_PRINT(cond, message) static_cast<void>(0)
 #define UNREACHABLE __builtin_unreachable

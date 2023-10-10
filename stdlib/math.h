@@ -7,11 +7,11 @@ namespace mipt_vm::stdlib {
 
 class Math {
 public:
-    static int sqrt(int64_t val);
+    static double sqrt(double val);
 
-    static int sin(int64_t val);
+    static double sin(double val);
 
-    static int cos(int64_t val);
+    static double cos(double val);
 };
 
 }  // namespace mipt_vm::stdlib

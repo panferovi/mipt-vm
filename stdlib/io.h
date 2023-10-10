@@ -14,6 +14,14 @@ public:
     static void printI64(int64_t val);
 
     static void printlnI64(int64_t val);
+
+    static void printF64(double val);
+
+    static void printlnF64(double val);
+
+    static int64_t inputI64();
+
+    static double inputF64();
 };
 
 }  // namespace mipt_vm::stdlib

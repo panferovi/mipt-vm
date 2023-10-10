@@ -13,7 +13,7 @@ void IO::printString(const char *str)
 /* static */
 void IO::printlnString(const char *str)
 {
-    std::cout << str;
+    printString(str);
     std::cout << std::endl;
 }
 
@@ -24,9 +24,39 @@ void IO::printI64(int64_t val)
 }
 
 /* static */
-void IO::printI64(int64_t val)
+void IO::printlnI64(int64_t val)
 {
-    std::cout << val;
+    printI64(val);
     std::cout << std::endl;
 }
+
+/* static */
+void IO::printF64(double val)
+{
+    std::cout << val;
+}
+
+/* static */
+void IO::printlnF64(double val)
+{
+    printF64(val);
+    std::cout << std::endl;
+}
+
+/* static */
+int64_t IO::inputI64()
+{
+    int64_t val;
+    std::cin >> val;
+    return val;
+}
+
+/* static */
+double IO::inputF64()
+{
+    double val;
+    std::cin >> val;
+    return val;
+}
+
 }  // namespace mipt_vm::stdlib
