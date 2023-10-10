@@ -1,5 +1,6 @@
-#include "interpreter.h"
-#include "../file/bytecode.h"
+#include "runtime/interpreter.h"
+#include "file/bytecode.h"
+#include "common/macros.h"
 
 namespace mipt_vm {
 
@@ -17,108 +18,106 @@ void Interpreter::Interpret([[maybe_unused]] Bytecode &bytecode)
 
 #define DISPATCH() \
     pc++;          \
-    goto *dispatch_table[insns[pc].type];
+    goto *dispatch_table[insns[pc].type]
 
     goto *dispatch_table[insns[pc].type];
 
 sta:
     printf("Im sta\n");
-    registers[insns[pc].src_2.reg_name] = ac;
-    DISPATCH()
+    registers[insns[pc].src_2.reg] = ac;
+    DISPATCH();
 fsta:
     printf("Im fsta\n");
-    registers[insns[pc].src_2.reg_name] = ac;
-    DISPATCH()
+    registers[insns[pc].src_2.reg] = ac;
+    DISPATCH();
 lda:
     printf("Im lda\n");
-    ac = registers[insns[pc].src_2.reg_name];
-    DISPATCH()
+    ac = registers[insns[pc].src_2.reg];
+    DISPATCH();
 ldai:
     printf("Im ldai\n");
     ac.value.as_int = insns[pc].src_2.imm.as_int;
-    DISPATCH()
+    DISPATCH();
 flda:
     printf("Im flda\n");
-    ac = registers[insns[pc].src_2.reg_name];
-    DISPATCH()
+    ac = registers[insns[pc].src_2.reg];
+    DISPATCH();
 fldai:
     printf("Im fldai\n");
     ac.value.as_double = insns[pc].src_2.imm.as_double;
-    DISPATCH()
+    DISPATCH();
 add:
     printf("Im add\n");
-    ac.value.as_int += registers[insns[pc].src_2.reg_name].value.as_int;
-    DISPATCH()
+    ac.value.as_int += registers[insns[pc].src_2.reg].value.as_int;
+    DISPATCH();
 addi:
     printf("Im addi\n");
     ac.value.as_int += insns[pc].src_2.imm.as_int;
-    DISPATCH()
+    DISPATCH();
 fadd:
     printf("Im fadd\n");
-    ac.value.as_double += registers[insns[pc].src_2.reg_name].value.as_double;
-    DISPATCH()
+    ac.value.as_double += registers[insns[pc].src_2.reg].value.as_double;
+    DISPATCH();
 faddi:
     printf("Im faddi\n");
     ac.value.as_double += insns[pc].src_2.imm.as_double;
-    DISPATCH()
+    DISPATCH();
 sub:
     printf("Im sub\n");
-    ac.value.as_int -= registers[insns[pc].src_2.reg_name].value.as_int;
-    DISPATCH()
+    ac.value.as_int -= registers[insns[pc].src_2.reg].value.as_int;
+    DISPATCH();
 subi:
     printf("Im subi\n");
     ac.value.as_int -= insns[pc].src_2.imm.as_int;
-    DISPATCH()
+    DISPATCH();
 fsub:
     printf("Im fsub\n");
-    ac.value.as_double -= registers[insns[pc].src_2.reg_name].value.as_double;
-    DISPATCH()
+    ac.value.as_double -= registers[insns[pc].src_2.reg].value.as_double;
+    DISPATCH();
 fsubi:
     printf("Im fsubi\n");
     ac.value.as_double -= insns[pc].src_2.imm.as_double;
-    DISPATCH()
+    DISPATCH();
 mul:
     printf("Im mul\n");
-    ac.value.as_int *= registers[insns[pc].src_2.reg_name].value.as_int;
-    DISPATCH()
+    ac.value.as_int *= registers[insns[pc].src_2.reg].value.as_int;
+    DISPATCH();
 muli:
     printf("Im muli\n");
     ac.value.as_int *= insns[pc].src_2.imm.as_int;
-    DISPATCH()
+    DISPATCH();
 fmul:
     printf("Im fmul\n");
-    ac.value.as_double *= registers[insns[pc].src_2.reg_name].value.as_double;
-    DISPATCH()
+    ac.value.as_double *= registers[insns[pc].src_2.reg].value.as_double;
+    DISPATCH();
 fmuli:
     printf("Im fmuli\n");
     ac.value.as_double *= insns[pc].src_2.imm.as_double;
-    DISPATCH()
+    DISPATCH();
 div:
-    ac.value.as_int /= registers[insns[pc].src_2.reg_name].value.as_int;
+    ac.value.as_int /= registers[insns[pc].src_2.reg].value.as_int;
     printf("Im div\n");
-    DISPATCH()
+    DISPATCH();
 divi:
     ac.value.as_int /= insns[pc].src_2.imm.as_int;
     printf("Im divi\n");
-    DISPATCH()
+    DISPATCH();
 fdiv:
     printf("Im fdiv\n");
-    ac.value.as_double /= registers[insns[pc].src_2.reg_name].value.as_double;
-    DISPATCH()
+    ac.value.as_double /= registers[insns[pc].src_2.reg].value.as_double;
+    DISPATCH();
 fdivi:
     printf("Im fdivi\n");
     ac.value.as_double /= insns[pc].src_2.imm.as_double;
-    DISPATCH()
-ldastr:
-    printf("Im ldai\n");
-    ac.value.as_uint = insns[pc].src_2.imm.as_uint;
-    DISPATCH()
-staobj:
-    registers[insns[pc].src_2.reg_name] = ac;
     DISPATCH();
-exit:
-    // printf("Res %ld\n", ac.value.as_int);
-    return;
+ldastr:
+    printf("Im ldastr\n");
+    ac.value.as_uint = insns[pc].src_2.imm.as_uint;
+    DISPATCH();
+staobj:
+    printf("Im staobj\n");
+    registers[insns[pc].src_2.reg] = ac;
+    DISPATCH();
 call:
     auto proto_type = insns[pc].src_2.proto->GetType();
     auto handler = insns[pc].src_2.proto->GetHandler();
@@ -129,10 +128,12 @@ call:
             reinterpret_cast<void (*)(double)>(handler)(registers[arg].value.as_double);
             break;
         case Proto::Type::HANDLE_VOID_OBJ:
+            printf("Im HANDLE_VOID_OBJ\n");
             reinterpret_cast<void (*)(uint64_t)>(handler)(registers[arg].value.as_uint);
             break;
         case Proto::Type::HANDLE_F64_VOID:
             ac.value.as_double = reinterpret_cast<double (*)()>(handler)();
+            printf("Im HANDLE_F64_VOID %lg\n", ac.value.as_double);
             break;
         case Proto::Type::HANDLE_F64_F64:
             ac.value.as_double = reinterpret_cast<double (*)(double)>(handler)(registers[arg].value.as_double);
@@ -141,6 +142,10 @@ call:
             UNREACHABLE();
             break;
     }
+    DISPATCH();
+exit:
+    // printf("Res %ld\n", ac.value.as_int);
+    return;
 }
 
 }  // namespace mipt_vm

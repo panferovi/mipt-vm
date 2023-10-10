@@ -58,7 +58,7 @@
     }                                                  \
   } while (0)
 
-#define UNREACHABLE                                       \
+#define UNREACHABLE()                                       \
   do {                                                      \
     ASSERT_PRINT(false, "This line should be unreachable"); \
     __builtin_unreachable();                                \

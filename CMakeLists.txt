@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(SRC_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
-add_compile_options(-std=c++20 -O2 -Wall -Wextra -Wpedantic)
+add_compile_options(-std=c++20 -g)
 
 add_library(mipt_vm
     STATIC

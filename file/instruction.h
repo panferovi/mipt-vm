@@ -65,7 +65,6 @@ public:
 
     Instruction(Proto *proto) : type(Type::CALL)
     {
-        std::cout << "proto" << std::endl;
         src_2.proto = proto;
     }
 
