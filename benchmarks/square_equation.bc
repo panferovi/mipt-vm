@@ -3,46 +3,47 @@
     sta.obj v0
     call IO.printlnString, v0
 
-    call IO.input
-    sta v0
-    call IO.input
-    sta v1
-    call IO.input
-    sta v2
+    call IO.inputF64
+    fsta v0
+    call IO.inputF64
+    fsta v1
+    call IO.inputF64
+    fsta v2
 
-    lda v0
-    mul v2
-    muli 4
-    sta v3              # v3: 4 * a * c
+    flda v0
+    fmul v2
+    fmuli 4
+    fsta v3             # v3: 4 * a * c
 
-    lda v1
-    mul v1
-    sub v3
-    sta v3
-    call Math.sqrt v3   # v3: sqrt(D)
+    flda v1
+    fmul v1
+    fsub v3
+    fsta v3
+    call Math.sqrt, v3
+    fsta v3             # v3: sqrt(D)
 
-    ldai 0
-    sub v1
-    sta v4              # v4: -b
+    fldai 0
+    fsub v1
+    fsta v4             # v4: -b
 
-    lda v0
-    muli 2
-    stai v5             # v5: 2 * a
+    flda v0
+    fmuli 2
+    fsta v5             # v5: 2 * a
 
-    lda v4
-    add v3
-    div v5
-    stai v6             # v6: root1
+    flda v4
+    fadd v3
+    fdiv v5
+    fsta v6             # v6: root1
 
-    lda v4
-    sub v3
-    div v5
-    stai v7             # v7: root2
+    flda v4
+    fsub v3
+    fdiv v5
+    fsta v7             # v7: root2
 
     lda.str "Roots of the equation:"
     sta.obj v3
-
     call IO.printlnString, v3
+
     call IO.printlnI64, v6
     call IO.printlnI64, v7
 

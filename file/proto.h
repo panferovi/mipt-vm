@@ -9,17 +9,40 @@ class Proto {
 public:
     enum Type : uint8_t {
         HANDLE_VOID_VOID,
-        HANDLE_VOID_I,
-        HANDLE_I_VOID,
-        HANDLE_I_I,
+        HANDLE_VOID_I64,
+        HANDLE_VOID_F64,
+        HANDLE_VOID_OBJ,
+        HANDLE_I64_VOID,
+        HANDLE_F64_VOID,
+        HANDLE_OBJ_VOID,
+        HANDLE_F64_F64,
 
         HANDLE_COMPLEX
     };
 
+    static Proto *Create(Type type, void *handler, uint8_t reg)
+    {
+        return new Proto {type, handler, reg};
+    }
+
+    static Proto *Create(Type type, void *handler)
+    {
+        return new Proto {type, handler};
+    }
+
+    static void Destroy(Proto *proto)
+    {
+        delete proto;
+    }
+
+    Proto(Type type, void *handler, uint8_t reg) : type_(type), handler_(handler), reg_(reg) {}
+
+    Proto(Type type, void *handler) : type_(type), handler_(handler) {}
+
 private:
-    Type type_;
-    uint8_t arg_name_ {0};
+    const Type type_;
     void *handler_ {nullptr};
+    uint8_t reg_ {0};
 };
 
 }  // namespace mipt_vm

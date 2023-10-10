@@ -4,7 +4,9 @@ project(MIPT_VM VERSION 1.0)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_compile_options(-std=c++17 -O2 -Wall -Wextra -Wpedantic)
+set(SRC_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+
+add_compile_options(-std=c++20 -O2 -Wall -Wextra -Wpedantic)
 
 add_library(mipt_vm
     STATIC
@@ -15,9 +17,10 @@ add_library(mipt_vm
 )
 
 target_include_directories(mipt_vm
-    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+    PUBLIC ${SRC_ROOT_DIR}
 )
 
+add_subdirectory(stdlib)
 add_subdirectory(benchmarks)
 add_subdirectory(tests)
 
