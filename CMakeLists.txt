@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(SRC_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
-add_compile_options(-std=c++20 -g)
+add_compile_options(-std=c++17 -g)
 
 add_library(mipt_vm
     STATIC
@@ -14,6 +14,7 @@ add_library(mipt_vm
     runtime/vm.cpp
     runtime/interpreter.cpp
     common/debug.cpp
+    file/instruction.cpp
 )
 
 target_include_directories(mipt_vm

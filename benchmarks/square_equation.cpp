@@ -1,3 +1,5 @@
+#include <cstring>
+
 #include "runtime/runtime.h"
 #include "runtime/vm.h"
 #include "file/bytecode.h"
@@ -15,12 +17,14 @@ public:
         static constexpr size_t insts_cnt = 34;
         insts.reserve(insts_cnt);
         {
-            // const char *input_coeffs = "Input coeffs: a, b, c";
-            // insts.emplace_back(Instruction::Type::LDASTR,
-            //                    Instruction::Immediate {reinterpret_cast<uint64_t>(input_coeffs)});
-            // insts.emplace_back(Instruction::Type::STAOBJ, 0);
-            // insts.emplace_back(
-            //     Proto::Create(Proto::Type::HANDLE_VOID_OBJ, reinterpret_cast<void *>(stdlib::IO::printlnString), 0));
+            const char *const_input_coeffs = "Input coeffs: a, b, c";
+            char *input_coeffs = new char[std::strlen(const_input_coeffs)];
+            std::strncpy(input_coeffs, const_input_coeffs, std::strlen(const_input_coeffs));
+            insts.emplace_back(Instruction::Type::LDASTR,
+                               Instruction::Immediate {.as_ptr = input_coeffs});
+            insts.emplace_back(Instruction::Type::STAOBJ, 0);
+            insts.emplace_back(
+                Proto::Create(Proto::Type::HANDLE_VOID_OBJ, reinterpret_cast<void *>(stdlib::IO::printlnString), 0));
         }
         {
             insts.emplace_back(
@@ -69,9 +73,9 @@ public:
             insts.emplace_back(Instruction::Type::FSTA, 7);
         }
         {
-            // const char *equation_roots = "Roots of the equation:";
+            // char *equation_roots = "Roots of the equation:";
             // insts.emplace_back(Instruction::Type::LDASTR,
-            //                    Instruction::Immediate {reinterpret_cast<uint64_t>(equation_roots)});
+            //                    Instruction::Immediate {.as_ptr = const_cast<char *>(equation_roots)});
             // insts.emplace_back(Instruction::Type::STAOBJ, 3);
             // insts.emplace_back(
             //     Proto::Create(Proto::Type::HANDLE_VOID_OBJ, reinterpret_cast<void *>(stdlib::IO::printlnString), 3));

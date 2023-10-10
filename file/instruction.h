@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "file/proto.h"
+#include "common/macros.h"
 
 namespace mipt_vm {
 
@@ -42,9 +43,10 @@ public:
     // clang-format on
 
     union Immediate {
-        uint64_t as_uint;
         int64_t as_int;
+        uint64_t as_uint;
         double as_double;
+        void *as_ptr;
     };
 
     union OperandType {
@@ -53,63 +55,22 @@ public:
         Proto *proto {nullptr};
     };
 
-    Instruction(Type type, uint8_t reg_src_2) : type(type)
-    {
-        src_2.reg = reg_src_2;
-    }
-
-    Instruction(Type type, Immediate imm) : type(type)
-    {
-        src_2.imm = imm;
-    }
-
-    Instruction(Proto *proto) : type(Type::CALL)
-    {
-        src_2.proto = proto;
-    }
-
-    Instruction(Type type, uint8_t src_1, Immediate imm) : type(type), src_reg_1(src_1)
-    {
-        src_2.imm = imm;
-    }
-
-    Instruction(Type type, uint8_t src_1, uint8_t reg_src_2) : type(type), src_reg_1(src_1)
-    {
-        src_2.reg = reg_src_2;
-    }
-
-    Instruction(Instruction &&inst)
-        : type(inst.type), src_reg_1(inst.src_reg_1), src_2(inst.src_2)
-    {
-        if (type == Type::CALL) {
-            src_2.proto = nullptr;
-        }
-    }
-    Instruction &operator=(Instruction &&inst) {
-        if (this != &inst) {
-            type = inst.type;
-            src_reg_1 = inst.src_reg_1;
-            src_2 = inst.src_2;
-            if (inst.type == Type::CALL) {
-                inst.src_2.proto = nullptr;
-            }
-        }
-        return *this;
-    }
+    Instruction(Type type, uint8_t reg_src_2);
+    Instruction(Type type, Immediate imm);
+    Instruction(Proto *proto);
+    Instruction(Type type, uint8_t src_1, Immediate imm);
+    Instruction(Type type, uint8_t src_1, uint8_t reg_src_2);
 
     NO_COPY_SEMANTIC(Instruction);
-
-    ~Instruction() {
-        if (type == Type::CALL) {
-            Proto::Destroy(src_2.proto);
-        }
-    }
+    Instruction(Instruction &&inst);
+    Instruction &operator=(Instruction &&inst);
+    ~Instruction();
 
     Type type;
     uint8_t src_reg_1 {0};
     OperandType src_2;
 };
 
-}  // mipt_vm
+}  // namespace mipt_vm
 
 #endif  // FILE_INSTRUCTION_H_

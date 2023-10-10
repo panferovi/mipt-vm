@@ -13,6 +13,7 @@ public:
         int64_t as_int {0};
         uint64_t as_uint;
         double as_double;
+        void *as_ptr;
     };
 
     ValueType value;

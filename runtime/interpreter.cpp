@@ -116,11 +116,12 @@ fdivi:
     DISPATCH();
 ldastr:
     printf("Im ldastr\n");
-    ac.value.as_uint = insns[pc].src_2.imm.as_uint;
+    ac.value.as_ptr = insns[pc].src_2.imm.as_ptr;
+    // printf("Im ldastr %s\n", ac.value.as_ptr);
     DISPATCH();
 staobj:
     printf("Im staobj\n");
-    registers[insns[pc].src_2.reg] = ac;
+    registers[insns[pc].src_2.reg].value.as_ptr = ac.value.as_ptr;
     DISPATCH();
 call:
     proto_type = insns[pc].src_2.proto->GetType();
@@ -133,7 +134,7 @@ call:
             break;
         case Proto::Type::HANDLE_VOID_OBJ:
             printf("Im HANDLE_VOID_OBJ\n");
-            reinterpret_cast<void (*)(uint64_t)>(handler)(registers[reg].value.as_uint);
+            reinterpret_cast<void (*)(void *)>(handler)(reinterpret_cast<char *>(registers[reg].value.as_ptr));
             break;
         case Proto::Type::HANDLE_F64_VOID:
             ac.value.as_double = reinterpret_cast<double (*)()>(handler)();
