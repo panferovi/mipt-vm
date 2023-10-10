@@ -39,8 +39,24 @@ public:
 
     Proto(Type type, void *handler) : type_(type), handler_(handler) {}
 
+    void *GetHandler()
+    {
+        return handler_;
+    }
+
+    uint8_t GetArg()
+    {
+        return arg_;
+    }
+
+    Type GetType()
+    {
+        return type_;
+    }
+
 private:
     const Type type_;
+    uint8_t arg_ {0};
     void *handler_ {nullptr};
     uint8_t reg_ {0};
 };

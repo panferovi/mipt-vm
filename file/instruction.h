@@ -14,24 +14,30 @@ public:
     enum Type : uint8_t {
         LDA,
         LDAI,
-        FLDAI,
         FLDA,
+        FLDAI,
         LDASTR,
         STA,
         FSTA,
         STAOBJ,
         ADD,
+        ADDI,
         FADD,
+        FADDI,
         SUB,
+        SUBI,
         FSUB,
+        FSUBI,
         MUL,
+        MULI,
         FMUL,
         FMULI,
-        MULI,
         DIV,
+        DIVI,
         FDIV,
+        FDIVI,
         CALL,
-        RETURN
+        EXIT
     };
     // clang-format on
 

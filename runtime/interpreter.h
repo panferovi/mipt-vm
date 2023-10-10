@@ -1,8 +1,8 @@
 #ifndef RUNTIME_INTERPRETER_H_
 #define RUNTIME_INTERPRETER_H_
 
-#include "common/macros.h"
-#include "runtime/register_manager.h"
+#include "../common/macros.h"
+#include "register_manager.h"
 
 namespace mipt_vm {
 
