@@ -38,10 +38,10 @@
   DEFAULT_COPY_CTOR(TypeName)           \
   DEFAULT_COPY_OPERATOR(TypeName)
 
-#if !defined(NDEBUG)
-
 #define LIKELY(exp) (__builtin_expect((exp) != 0, true))
 #define UNLIKELY(exp) (__builtin_expect((exp) != 0, false))
+
+#if !defined(NDEBUG)
 
 #define ASSERT_FAIL(expr) mipt_vm::AssertionFail(expr, __FILE__, __LINE__, __FUNCTION__)
 
