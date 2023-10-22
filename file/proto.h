@@ -36,7 +36,7 @@ public:
         delete proto;
     }
 
-    Proto(Type type, void *handler, uint8_t reg) : type_(type), handler_(handler), reg_(reg) {}
+    Proto(Type type, void *handler, uint16_t reg) : type_(type), handler_(handler), reg_(reg) {}
 
     Proto(Type type, void *handler) : type_(type), handler_(handler) {}
 
@@ -45,7 +45,7 @@ public:
         return handler_;
     }
 
-    uint8_t GetReg()
+    uint16_t GetReg()
     {
         return reg_;
     }
@@ -58,7 +58,7 @@ public:
 private:
     const Type type_;
     void *handler_ {nullptr};
-    uint8_t reg_ {0};
+    uint16_t reg_ {0};
 };
 
 }  // namespace mipt_vm

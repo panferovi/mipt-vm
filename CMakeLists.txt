@@ -6,13 +6,14 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(SRC_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
-add_compile_options(-std=c++20 -O2 -Wall -Wextra)
+add_compile_options(-std=c++20 -Wall -Wextra -Werror)
 
 add_library(mipt_vm
     STATIC
     runtime/runtime.cpp
     runtime/vm.cpp
     runtime/interpreter.cpp
+    file/instruction.cpp
     common/debug.cpp
 )
 
@@ -39,10 +40,10 @@ endfunction (filter_items)
 file(GLOB_RECURSE EMULATOR_FILES *cpp *.h)
 filter_items(EMULATOR_FILES "CMakeFiles/*")
 
-find_program(CLANG_FORMAT "clang-format-10" REQUIRED)
+find_program(CLANG_FORMAT "clang-format-14" REQUIRED)
 
 add_custom_target(format
-    COMMAND clang-format-10
+    COMMAND clang-format-14
     -i
     -style=file
     ${EMULATOR_FILES}

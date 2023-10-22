@@ -9,42 +9,47 @@ namespace mipt_vm {
 
 class Register {
 public:
-    union ValueType {
-        int64_t as_int {0};
-        uint64_t as_uint;
+    union {
+        int64_t as_int;
         double as_double;
+        uintptr_t as_obj;
     };
-
-    ValueType value;
 };
 
 class RegisterManager {
 public:
-    RegisterManager() = default;
+    RegisterManager(uint16_t register_cnt)
+    {
+        registers_.resize(register_cnt);
+    }
+
     NO_COPY_SEMANTIC(RegisterManager);
     NO_MOVE_SEMANTIC(RegisterManager);
 
-    static constexpr uint16_t RegisterCount = UINT16_MAX;
+    using RegisterIdx = uint16_t;
+    static constexpr uint16_t MAX_REGISTER_CNT = UINT16_MAX;
 
-    uint64_t &GetPc()
+    inline Register &GetRegister(RegisterIdx idx)
     {
-        return pc_;
+        ASSERT(idx < registers_.size());
+        return registers_[idx];
     }
 
-    Register &GetAccumulator()
+    const Register &GetDummy() const
     {
-        return accumulator_;
+        return dummy_register_;
     }
 
-    std::array<Register, RegisterCount> &GetRegisters()
+    void AllocateRegister(Register reg = dummy_register_)
     {
-        return registers_;
+        registers_.push_back(reg);
     }
 
 private:
-    uint64_t pc_ {0};
-    Register accumulator_;
-    std::array<Register, RegisterCount> registers_;
+    using Registers = std::vector<Register>;
+
+    static Register dummy_register_;
+    Registers registers_;
 };
 
 }  // namespace mipt_vm

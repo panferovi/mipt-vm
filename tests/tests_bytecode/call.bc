@@ -1,0 +1,15 @@
+.function void foo(core.String a0) {
+    lda.str "Called foo ";
+    sta.obj v0;
+    call core.String.concat, v0, a0;
+    sta.obj v0;
+    call.intrinsic IO.printlnString, v0;
+    return;
+}
+
+.function i32 main() {
+    lda.str "from main";
+    sta.obj v0;
+    call foo, v0;
+    return 0;
+}

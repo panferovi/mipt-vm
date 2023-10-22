@@ -8,6 +8,7 @@ add_executable(mipt_vm_unit_tests
 
 target_link_libraries(mipt_vm_unit_tests
     PUBLIC mipt_vm
+    PUBLIC stdlib
     PUBLIC GTest::gtest_main
 )
 
